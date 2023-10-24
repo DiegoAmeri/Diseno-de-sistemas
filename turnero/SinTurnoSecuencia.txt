@@ -1,0 +1,27 @@
+title This is a title
+
+@startuml
+actor Paciente
+boundary "Interfaz de Usuario" as UI
+control "Controlador" as Controller
+database "Persistencia" as Persistence
+
+Paciente -> UI: Abrir página
+activate UI
+
+Paciente -> UI: Seleccionar opción sin turno
+activate UI
+ UI -> Controller: Solicitud de generacion de codigo
+activate UI
+ 
+Controller -> Controller: Generar codigo
+deactivate Persistence
+Controller ->Persistence: Guardar solicitud de codigo
+Controller -> UI: Mostrar código de reserva
+deactivate Controller
+
+
+Paciente -> UI: Cerrar página
+deactivate UI
+
+@enduml

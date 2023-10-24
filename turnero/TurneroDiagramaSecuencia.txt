@@ -1,0 +1,44 @@
+title This is a title
+
+@startuml
+actor Paciente
+boundary "Interfaz de Usuario" as UI
+control "Controlador" as Controller
+database "Persistencia" as Persistence
+
+Paciente -> UI: Abrir página
+activate UI
+
+Paciente -> UI: Seleccionar opción con turno
+activate UI
+UI -> Controller: Solicitar ingreso de DNI
+activate Controller
+Controller -> UI: Mostrar campo para ingresar DNI
+deactivate Controller
+
+Paciente -> UI: Ingresar DNI
+activate UI
+UI -> Controller: Enviar DNI ingresado
+activate Controller
+Controller -> Persistence: Consultar turno por DNI
+activate Persistence
+Persistence --> Controller: Lista de turnos reservados
+deactivate Persistence
+Controller -> UI: Mostrar lista de turnos
+deactivate Controller
+
+Paciente -> UI: Seleccionar turno deseado
+activate UI
+UI -> Controller: Enviar turno seleccionado
+activate Controller
+Controller -> Persistence: Confirmar turno
+activate Persistence
+Persistence --> Controller: Código de fila
+deactivate Persistence
+Controller -> UI: Mostrar código de fila
+deactivate Controller
+
+Paciente -> UI: Cerrar página
+deactivate UI
+
+@enduml
